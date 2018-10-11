@@ -6,9 +6,18 @@ const express = require('express')
       , app = express()
       , routes = require('./routes')
 
+let middleware = (req, res, next) => {
+  next()
+}
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded())
+
+// # routes for api
+app.use('/api', middleware, require('./api'))
+
 let webserver = {
   init: () => {
-    app.use('/', routes)
     app.listen(3000, console.log('listening on 3000...'))
   }
 }
